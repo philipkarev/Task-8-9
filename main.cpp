@@ -8,9 +8,9 @@ int main(){
 
     BST t;
     t.insert(25);
-    t.insert(25);
-    t.insert(25);
-    t.insert(25);
+    t.insert(15);
+    t.insert(35);
+//    t.insert(55);
 //    t.insert(30);
 //    t.display();
 //    t.remove(20);
