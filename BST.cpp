@@ -5,7 +5,28 @@
 #include "BST.h"
 
 
-struct node;
+
+BST::node* BST::insert(char* x, node* t) {
+
+    if (t == NULL) {
+        t = new node(x);
+    }
+    else {
+        node* u = new node(x);
+
+        if (u < t) {
+            delete u;
+            t->left = insert(x, t->left);
+        }
+        else if (u >= t) { // !!
+            delete u;
+            t->right = insert(x, t->right);
+        }
+    }
+
+    return t;
+}
+
 
 BST::node* BST::makeEmpty(node* t) {
 
@@ -14,6 +35,7 @@ BST::node* BST::makeEmpty(node* t) {
     {
         makeEmpty(t->left);
         makeEmpty(t->right);
+        delete [] t->data;
         delete t;
     }
 
@@ -21,20 +43,18 @@ BST::node* BST::makeEmpty(node* t) {
 }
 
 
-BST::node* BST::insert(int x, node* t) {
+/*BST::node* BST::insert(char* x, node* t) {
 
-    if (t == NULL){
-        t = new node;
-        t->data = x;
-        t->left = t->right = NULL;
-    }
-    else if (x < t->data)
+    if (t == NULL)
+        t = new node(x);
+
+    else if (t < t->data)
         t->left = insert(x, t->left);
     else if (x > t->data)
         t->right = insert(x, t->right);
 
     return t;
-}
+}*/
 
 
 BST::node* BST::findMin(node* t) {
@@ -59,7 +79,7 @@ BST::node* BST::findMax(node* t) {
 }
 
 
-BST::node* BST::remove(int x, node* t) {
+/*BST::node* BST::remove(char* x, node* t) {
 
     node* tmp;
 
@@ -88,19 +108,22 @@ BST::node* BST::remove(int x, node* t) {
 
     return t;
 }
+*/
 
-
-void BST::inorder(node *t) {
+void BST::inorder(node *t) { // !!!
 
     if (t == NULL)
         return;
+
     inorder(t->left);
-    cout << t->data << " ";
+    for (int i = 0; t->data[i] != '\0'; ++i)
+        cout << t->data[i];
+    cout << "   ";
     inorder(t->right);
 }
 
 
-BST::node* BST::find(node* t, int x) {
+/*BST::node* BST::find(node* t, int x) {
 
     if (t == NULL)
         return NULL;
@@ -110,7 +133,7 @@ BST::node* BST::find(node* t, int x) {
         return find(t->right, x);
     else
         return t;
-}
+} */
 
 BST::BST() {
 
@@ -124,16 +147,16 @@ BST::~BST() {
 }
 
 
-void BST::insert(int x) {
+void BST::insert(char* x) {
 
     root = insert(x, root);
 }
-
+/*
 
 void BST::remove(int x) {
 
     root = remove(x, root);
-}
+}*/
 
 
 void BST::display() {
@@ -143,7 +166,74 @@ void BST::display() {
 }
 
 
-void BST::search(int x) {
+/*void BST::search(int x) {
 
     root = find(root, x);
 }
+
+ */
+
+
+int BST::height(node* node) {
+
+    if (node == NULL)
+        return 0;
+
+    return 1 + max(height(node->left), height(node->right));
+}
+
+int BST::isBalanced(node* root) {
+
+    int left_height;
+    int right_height;
+
+    if (root == NULL)
+        return 1;
+
+    left_height = height(root->left);
+    right_height = height(root->right);
+
+    if (abs(left_height - right_height) <= 1 && isBalanced(root->left) && isBalanced(root->right)) {
+        cout << "Tree is balanced." << endl;
+        return 1;
+    }
+
+    cout << "Tree isn't balanced." << endl;
+    return 0;
+}
+
+/*int BST::operator < (node* n1) {
+
+//    if (n1 == NULL || n2 == NULL)
+//        cout << "Go to BST::operator <" << endl;
+
+    int len_n1;
+    for (int i = 0; n1->data[i] != '\0'; ++i)
+        ++len_n1;
+
+    int len_n2;
+    for (int i = 0; this->root->data[i] != '\0'; ++i)
+        ++len_n2;
+
+    return (len_n1 < len_n2 ? 1 : 0);
+}*/
+
+/*int operator >= (node* n1, node* n2) {
+
+    if (n1 == NULL || n2 == NULL)
+        cout << "Go to BST::operator >=" << endl;
+
+    int len_n1;
+    for (int i = 0; n1->data[i] != '\0'; ++i)
+        ++len_n1;
+
+    int len_n2;
+    for (int i = 0; n2->data[i] != '\0'; ++i)
+        ++len_n2;
+
+    return (len_n1 >= len_n2 ? 1 : 0);
+}*/
+
+
+// 1) При вводе значения сразу создать узел (написать конструктор) - иниц.данные, указатели по нулям;
+// 2) И уже реализовать вставку узла с помощью перегруж.оператора сравн.

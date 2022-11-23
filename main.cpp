@@ -7,9 +7,11 @@
 int main(){
 
     BST t;
-    t.insert(25);
-    t.insert(15);
-    t.insert(35);
+    char string1[] = "Hello, world! My name is Philip.";
+    char string2[] = "Hello";
+    t.insert(string1);
+    t.insert(string2);
+//    t.insert(35);
 //    t.insert(55);
 //    t.insert(30);
 //    t.display();
