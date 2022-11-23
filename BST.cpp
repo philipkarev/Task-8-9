@@ -6,19 +6,83 @@
 
 
 
+
+BST::node::node(char* x) {
+
+    data = new char[N];
+
+    for (int i = 0; x[i] != '\0'; ++i)
+        data[i] = x[i];
+
+    left = right = NULL;
+}
+
+
+int BST::node::operator < (node* n) {
+
+//    if (n == NULL)  // NB!
+//        cout << "Go to BST::operator <" << endl;
+
+    int len_n1;
+    for (int i = 0; n->data[i] != '\0'; ++i)
+        ++len_n1;
+
+    int len_n2;
+    for (int i = 0; this->data[i] != '\0'; ++i)
+        ++len_n2;
+
+//    if (len_n2 > len_n1)
+    return 50;
+
+//    return 0;
+//    return (len_n1 > len_n2 ? 1 : 0);
+}
+
+
+int BST::node::operator >= (node* n) {
+
+//    if (n == NULL)  // NB!
+//        cout << "Go to BST::operator <" << endl;
+
+    int len_n1;
+    for (int i = 0; n->data[i] != '\0'; ++i)
+        ++len_n1;
+
+    int len_n2;
+    for (int i = 0; this->data[i] != '\0'; ++i)
+        ++len_n2;
+
+    cout << "\nLength of n = " << len_n1 << endl;
+    cout << "\nLength of this = " << len_n1 << "\n" << endl;
+
+//    if (len_n2 >= len_n1)
+//        return 1;
+
+    return 0;
+//    return (len_n1 <= len_n2 ? 1 : 0);
+}
+
+
 BST::node* BST::insert(char* x, node* t) {
 
     if (t == NULL) {
         t = new node(x);
+        cout << 60 << endl;
     }
     else {
         node* u = new node(x);
 
+        cout << "u < t return " << (u < t) << endl;
+        cout << "t < u return " << (t < u) << endl;
+        cout << "u >= t return " << (u >= t) << endl;
+
         if (u < t) {
+            cout << 66 << endl;
             delete u;
             t->left = insert(x, t->left);
         }
         else if (u >= t) { // !!
+            cout << 71 << endl;
             delete u;
             t->right = insert(x, t->right);
         }
@@ -57,26 +121,26 @@ BST::node* BST::makeEmpty(node* t) {
 }*/
 
 
-BST::node* BST::findMin(node* t) {
-
-    if (t == NULL)
-        return NULL;
-    else if (t->left == NULL)
-        return t;
-    else
-        return findMin(t->left);
-}
-
-
-BST::node* BST::findMax(node* t) {
-
-    if (t == NULL)
-        return NULL;
-    else if (t->right == NULL)
-        return t;
-    else
-        return findMax(t->right);
-}
+//BST::node* BST::findMin(node* t) {
+//
+//    if (t == NULL)
+//        return NULL;
+//    else if (t->left == NULL)
+//        return t;
+//    else
+//        return findMin(t->left);
+//}
+//
+//
+//BST::node* BST::findMax(node* t) {
+//
+//    if (t == NULL)
+//        return NULL;
+//    else if (t->right == NULL)
+//        return t;
+//    else
+//        return findMax(t->right);
+//}
 
 
 /*BST::node* BST::remove(char* x, node* t) {

@@ -16,7 +16,14 @@ int main(){
 //    t.insert(30);
 //    t.display();
 //    t.remove(20);
-    t.display();
+//    t.display();
+
+//    cout << "\n\n\n";
+//    int a = 0, b = 1;
+//    if (!a)
+//        cout << "0 is false" << endl;
+//    if (b)
+//        cout << "1 is true" << endl;
 //    t.remove(25);
 //    t.display();
 //    t.remove(30);
