@@ -23,48 +23,31 @@ BST::node::node(char* x) {
 }
 
 
-int BST::node::operator < (node* n) {  // reload operator node with pointer
+int BST::node::operator < (node* n) {  // reload operator < node with pointer
 
-//    if (n == NULL)  // NB!
-//        cout << "Go to BST::operator <" << endl;
+    if (n == NULL)
+        cout << "Error in BST::operator <. The node* is empty." << endl;
 
-    int len_n = 0;
-//    cout << "\nn->data[i]\n";
-    for (int i = 0; n->data[i] != '\0'; ++i) {
-//        cout << n->data[i];
-        ++len_n;
-    }
-//    cout << endl;
-    ++len_n;
-//    cout << "len_n = " << len_n << endl;
-
-//    cout << "\nthis->data[i]\n";
     int len_this = 0;
     for (int i = 0; this->data[i] != '\0'; ++i) {
-//        cout << this->data[i];
         ++len_this;
     }
     ++len_this;
 
-//    cout << "len_this = " << len_this << endl;
-//    cout << "len_n = " << len_n << endl;
-//    cout << "result = " << (len_this < len_n ? 1 : 0) << "\n\n\n\n";
+    int len_n = 0;
+    for (int i = 0; n->data[i] != '\0'; ++i) {
+        ++len_n;
+    }
+    ++len_n;
 
     return (len_this < len_n ? 1 : 0);
 }
 
 
-int BST::node::operator >= (node* n) {  // reload operator node with pointer
+int BST::node::operator > (node* n) {  // reload operator > node with pointer
 
-//    if (n == NULL)  // NB!
-//        cout << "Go to BST::operator <" << endl;
-
-    int len_n = 0;
-    for (int i = 0; n->data[i] != '\0'; ++i) {
-        ++len_n;
-//        cout << len_n1 << endl;
-    }
-    ++len_n;
+    if (n == NULL)
+        cout << "Error in BST::operator >. The node* is empty." << endl;
 
     int len_this = 0;
     for (int i = 0; this->data[i] != '\0'; ++i) {
@@ -72,43 +55,63 @@ int BST::node::operator >= (node* n) {  // reload operator node with pointer
     }
     ++len_this;
 
-//    cout << "\nLength of n = " << len_n << endl;
-//    cout << "\nLength of this = " << len_this << "\n" << endl;
-//    cout << "result >= is " << (len_this >= len_n ? 1 : 0) << endl;
+    int len_n = 0;
+    for (int i = 0; n->data[i] != '\0'; ++i) {
+        ++len_n;
+    }
+    ++len_n;
 
-    return (len_this >= len_n ? 1 : 0);
+    return (len_this > len_n ? 1 : 0);
+}
+
+int BST::node::operator < (int n) {  // reload operator < node with integer
+
+    if (n < 0)
+        cout << "Error in BST::operator <. n < 0." << endl;
+
+    int len_this = 0;
+    for (int i = 0; this->data[i] != '\0'; ++i) {
+        ++len_this;
+    }
+    ++len_this;
+
+    return (len_this < n ? 1 : 0);
 }
 
 
-BST::node* BST::insert(char* x, node* t) {
+int BST::node::operator > (int n) {  // reload operator > node with integer
 
-//    if (t == NULL)
-//        cout << "t = " << t << endl;
+    if (n < 0)
+        cout << "Error in BST::operator <. n < 0." << endl;
+
+    int len_this = 0;
+    for (int i = 0; this->data[i] != '\0'; ++i) {
+        ++len_this;
+    }
+    ++len_this;
+
+    return (len_this > n ? 1 : 0);
+}
+
+BST::node* BST::insert(char* x, node* t) {
 
     if (t == NULL) {
         t = new node(x);
-//        cout << 60 << endl;
     }
     else {
         node* u = new node(x);
 
-//        cout << "*t < u return " << (*t < u) << endl;
-//        cout << "t < u return " << (t < u) << endl;
-//        cout << "u >= t return " << (*t >= u) << endl;
-
-// перегружен оператор сравнения для вершины и указателя. Вызвать оператор из
-// можно сейчас так *t < u
-
-        if (*u < t) { // *t < u
-//            cout << 66 << endl;
+        if (*u < t) {
             delete u;
             t->left = insert(x, t->left);
         }
-        else if (*u >= t) { // !!
-//            cout << 71 << endl;
+        else if (*u > t) {
             delete u;
             t->right = insert(x, t->right);
         }
+//        else {
+//            cout << "Lengths are equal." << endl;
+//        }
     }
 
     return t;
@@ -130,61 +133,66 @@ BST::node* BST::makeEmpty(node* t) {
 }
 
 
-// перегружен оператор сравнения для вершины и указателя. Вызвать оператор из
-// можно сейчас так *t < u
-
-/*BST::node* BST::insert(char* x, node* t) {
+BST::node* BST::findMin(node* t) {
 
     if (t == NULL)
-        t = new node(x);
+        return NULL;
 
-    else if (t < t->data)
-        t->left = insert(x, t->left);
-    else if (x > t->data)
-        t->right = insert(x, t->right);
+    else if (t->left == NULL)
+        return t;
+    else
+        return findMin(t->left);
+}
 
-    return t;
-}*/
+/*
+BST::node* BST::findMax(node* t) {
 
-
-//BST::node* BST::findMin(node* t) {
-//
-//    if (t == NULL)
-//        return NULL;
-//    else if (t->left == NULL)
-//        return t;
-//    else
-//        return findMin(t->left);
-//}
-//
-//
-//BST::node* BST::findMax(node* t) {
-//
-//    if (t == NULL)
-//        return NULL;
-//    else if (t->right == NULL)
-//        return t;
-//    else
-//        return findMax(t->right);
-//}
+    if (t == NULL)
+        return NULL;
+    else if (t->right == NULL)
+        return t;
+    else
+        return findMax(t->right);
+} */
 
 
-/*BST::node* BST::remove(char* x, node* t) {
+BST::node* BST::remove(char* x, node* t) {
 
     node* tmp;
 
     if (t == NULL)
         return NULL;
 
-    else if (x < t->data)
+    node* u = new node(x);
+
+    if (*t > u) {
+        delete u;
         t->left = remove(x, t->left);
-    else if (x > t->data)
+    }
+    else if (*t < u) {
+        delete u;
         t->right = remove(x, t->right);
+    }
 
     else if (t->left && t->right) {
-        tmp = findMin(t->right);
-        t->data = tmp->data;
+        tmp = findMin(t->right); // search min el in right tree
+
+        int length = 0;
+
+        while (tmp->data[length] != '\0') {
+            ++length;
+        }
+        ++length; // for NULL-byte symbol
+
+        t->data = new char[length];
+
+        for (int i = 0; tmp->data[i] != '\0'; ++i)
+            t->data[i] = tmp->data[i];
+        t->data[length - 1] = '\0';
+
         t->right = remove(t->data, t->right);
+
+        delete u;
     }
 
     else {
@@ -193,14 +201,16 @@ BST::node* BST::makeEmpty(node* t) {
             t = t->right;
         else if (t->right == NULL)
             t = t->left;
+
+        delete u;
         delete tmp;
     }
 
     return t;
 }
-*/
 
-void BST::inorder(node *t) { // !!!
+
+void BST::inorder(node *t) {
 
     if (t == NULL)
         return;
@@ -213,17 +223,26 @@ void BST::inorder(node *t) { // !!!
 }
 
 
-/*BST::node* BST::find(node* t, int x) {
+BST::node* BST::find(node* t, int x) {
 
-    if (t == NULL)
+    if (t == NULL) {
         return NULL;
-    else if (x < t->data)
+    }
+
+    if (*t > x)
         return find(t->left, x);
-    else if (x > t->data)
+    else if (*t < x)
         return find(t->right, x);
-    else
+    else {
+        cout << "Find element is ";
+        for (int i = 0; t->data[i] != '\0'; ++i)
+            cout << t->data[i];
+        cout << endl;
+
         return t;
-} */
+    }
+}
+
 
 BST::BST() {
 
@@ -237,20 +256,16 @@ BST::~BST() {
 }
 
 
-// перегружен оператор сравнения для вершины и указателя.
-// Вызвать оператор из insert
-// можно сейчас так *t < u
-
 void BST::insert(char* x) {
 
     root = insert(x, root);
 }
-/*
 
-void BST::remove(int x) {
+
+void BST::remove(char* x) {
 
     root = remove(x, root);
-}*/
+}
 
 
 void BST::display() {
@@ -260,12 +275,10 @@ void BST::display() {
 }
 
 
-/*void BST::search(int x) {
+void BST::search(int x) {
 
     root = find(root, x);
 }
-
- */
 
 
 int BST::height(node* node) {
@@ -275,6 +288,13 @@ int BST::height(node* node) {
 
     return 1 + max(height(node->left), height(node->right));
 }
+
+
+int BST::get_height() {
+
+    return height(root);
+}
+
 
 int BST::isBalanced(node* root) {
 
@@ -295,39 +315,3 @@ int BST::isBalanced(node* root) {
     cout << "Tree isn't balanced." << endl;
     return 0;
 }
-
-/*int BST::operator < (node* n1) {
-
-//    if (n1 == NULL || n2 == NULL)
-//        cout << "Go to BST::operator <" << endl;
-
-    int len_n1;
-    for (int i = 0; n1->data[i] != '\0'; ++i)
-        ++len_n1;
-
-    int len_n2;
-    for (int i = 0; this->root->data[i] != '\0'; ++i)
-        ++len_n2;
-
-    return (len_n1 < len_n2 ? 1 : 0);
-}*/
-
-/*int operator >= (node* n1, node* n2) {
-
-    if (n1 == NULL || n2 == NULL)
-        cout << "Go to BST::operator >=" << endl;
-
-    int len_n1;
-    for (int i = 0; n1->data[i] != '\0'; ++i)
-        ++len_n1;
-
-    int len_n2;
-    for (int i = 0; n2->data[i] != '\0'; ++i)
-        ++len_n2;
-
-    return (len_n1 >= len_n2 ? 1 : 0);
-}*/
-
-
-// 1) При вводе значения сразу создать узел (написать конструктор) - иниц.данные, указатели по нулям;
-// 2) И уже реализовать вставку узла с помощью перегруж.оператора сравн.

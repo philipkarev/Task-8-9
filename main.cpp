@@ -9,22 +9,23 @@ int main(){
     BST t;
     char string1[] = "Hello, world! My name is Philip.";
     char string2[] = "Hello", string3[] = "1", string4[] = "a44";
+    char string5[] = "g";
     t.insert(string1);
     t.insert(string2);
-    t.insert(string3);
+    t.insert(string1);
+    t.insert(string5);
     t.insert(string4);
-//    t.insert(30);
+    t.insert(string3);
+
     t.display();
-//    t.remove(20);
-//    t.display();
+    t.search(6);
+    cout << "The height of tree is " << t.get_height() << endl;
+
+    t.remove(string4);
+    t.display();
 
 // 0 is false
 // 1 is true
-
-//    t.remove(25);
-//    t.display();
-//    t.remove(30);
-//    t.display();
 
     return 0;
 }

@@ -21,28 +21,33 @@ class BST {
         node(char*);
 
         int operator < (node*); // reload operator node with pointer
-        int operator >= (node*);  // reload operator node with pointer
+        int operator > (node*);  // reload operator node with pointer
+
+        int operator < (int); // reload operator node with integer
+        int operator > (int);  // reload operator node with integer
     };
 
     node* root;
 
     node* makeEmpty(node*);
     node* insert(char*, node*);
-//    node* findMin(node*);
+    node* findMin(node*);
 //    node* findMax(node*);
-//    node* remove(int, node*);
+    node* remove(char*,node*);
     void inorder(node*);
-//    node* find(node*, int);
+    node* find(node*, int);
 
     public:
         BST();
         ~BST();
         void insert(char*);
-//        void remove(int);
+        void remove(char*);
         void display();
-//        void search(int);
+        void search(int);
         int height(node*);
+        int get_height();
         int isBalanced(node*);
+
 };
 
 #define TASK_8_9_BTS_H
