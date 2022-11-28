@@ -5,84 +5,107 @@
 #include "BST.h"
 
 
-
-
 BST::node::node(char* x) {
 
-    data = new char[N];
+    int length = 0;
+    while (x[length] != '\0') {
+        ++length;
+    }
+    ++length; // for NULL-byte symbol
+
+    data = new char[length];
 
     for (int i = 0; x[i] != '\0'; ++i)
         data[i] = x[i];
+    data[length - 1] = '\0';
 
     left = right = NULL;
 }
 
 
-int BST::node::operator < (node* n) {
+int BST::node::operator < (node* n) {  // reload operator node with pointer
 
 //    if (n == NULL)  // NB!
 //        cout << "Go to BST::operator <" << endl;
 
-    int len_n1;
-    for (int i = 0; n->data[i] != '\0'; ++i)
-        ++len_n1;
+    int len_n = 0;
+//    cout << "\nn->data[i]\n";
+    for (int i = 0; n->data[i] != '\0'; ++i) {
+//        cout << n->data[i];
+        ++len_n;
+    }
+//    cout << endl;
+    ++len_n;
+//    cout << "len_n = " << len_n << endl;
 
-    int len_n2;
-    for (int i = 0; this->data[i] != '\0'; ++i)
-        ++len_n2;
+//    cout << "\nthis->data[i]\n";
+    int len_this = 0;
+    for (int i = 0; this->data[i] != '\0'; ++i) {
+//        cout << this->data[i];
+        ++len_this;
+    }
+    ++len_this;
 
-//    if (len_n2 > len_n1)
-    return 50;
+//    cout << "len_this = " << len_this << endl;
+//    cout << "len_n = " << len_n << endl;
+//    cout << "result = " << (len_this < len_n ? 1 : 0) << "\n\n\n\n";
 
-//    return 0;
-//    return (len_n1 > len_n2 ? 1 : 0);
+    return (len_this < len_n ? 1 : 0);
 }
 
 
-int BST::node::operator >= (node* n) {
+int BST::node::operator >= (node* n) {  // reload operator node with pointer
 
 //    if (n == NULL)  // NB!
 //        cout << "Go to BST::operator <" << endl;
 
-    int len_n1;
-    for (int i = 0; n->data[i] != '\0'; ++i)
-        ++len_n1;
+    int len_n = 0;
+    for (int i = 0; n->data[i] != '\0'; ++i) {
+        ++len_n;
+//        cout << len_n1 << endl;
+    }
+    ++len_n;
 
-    int len_n2;
-    for (int i = 0; this->data[i] != '\0'; ++i)
-        ++len_n2;
+    int len_this = 0;
+    for (int i = 0; this->data[i] != '\0'; ++i) {
+        ++len_this;
+    }
+    ++len_this;
 
-    cout << "\nLength of n = " << len_n1 << endl;
-    cout << "\nLength of this = " << len_n1 << "\n" << endl;
+//    cout << "\nLength of n = " << len_n << endl;
+//    cout << "\nLength of this = " << len_this << "\n" << endl;
+//    cout << "result >= is " << (len_this >= len_n ? 1 : 0) << endl;
 
-//    if (len_n2 >= len_n1)
-//        return 1;
-
-    return 0;
-//    return (len_n1 <= len_n2 ? 1 : 0);
+    return (len_this >= len_n ? 1 : 0);
 }
 
 
 BST::node* BST::insert(char* x, node* t) {
 
+//    if (t == NULL)
+//        cout << "t = " << t << endl;
+
     if (t == NULL) {
         t = new node(x);
-        cout << 60 << endl;
+//        cout << 60 << endl;
     }
     else {
         node* u = new node(x);
 
-        cout << "u < t return " << (u < t) << endl;
-        cout << "t < u return " << (t < u) << endl;
-        cout << "u >= t return " << (u >= t) << endl;
+//        cout << "*t < u return " << (*t < u) << endl;
+//        cout << "t < u return " << (t < u) << endl;
+//        cout << "u >= t return " << (*t >= u) << endl;
 
-        if (u < t) {
-            cout << 66 << endl;
+// перегружен оператор сравнения для вершины и указателя. Вызвать оператор из
+// можно сейчас так *t < u
+
+        if (*u < t) { // *t < u
+//            cout << 66 << endl;
             delete u;
             t->left = insert(x, t->left);
         }
-        else if (u >= t) { // !!
-            cout << 71 << endl;
+        else if (*u >= t) { // !!
+//            cout << 71 << endl;
             delete u;
             t->right = insert(x, t->right);
         }
@@ -106,6 +129,9 @@ BST::node* BST::makeEmpty(node* t) {
     return NULL;
 }
 
+
+// перегружен оператор сравнения для вершины и указателя. Вызвать оператор из
+// можно сейчас так *t < u
 
 /*BST::node* BST::insert(char* x, node* t) {
 
@@ -210,6 +236,10 @@ BST::~BST() {
     root = makeEmpty(root);
 }
 
+
+// перегружен оператор сравнения для вершины и указателя.
+// Вызвать оператор из insert
+// можно сейчас так *t < u
 
 void BST::insert(char* x) {
 

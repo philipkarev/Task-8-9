@@ -5,7 +5,6 @@
 #ifndef TASK_8_9_BTS_H
 
 #include <iostream>
-#define N 512
 
 using namespace std;
 
@@ -21,8 +20,8 @@ class BST {
 
         node(char*);
 
-        int operator < (node*);
-        int operator >= (node*);
+        int operator < (node*); // reload operator node with pointer
+        int operator >= (node*);  // reload operator node with pointer
     };
 
     node* root;
