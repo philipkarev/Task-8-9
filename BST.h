@@ -25,6 +25,9 @@ class BST {
 
         int operator < (int); // reload operator node with integer
         int operator > (int);  // reload operator node with integer
+
+        int operator < (char*); // reload operator node with string
+        int operator > (char*);  // reload operator node with string
     };
 
     node* root;

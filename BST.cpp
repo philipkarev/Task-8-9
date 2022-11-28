@@ -93,20 +93,63 @@ int BST::node::operator > (int n) {  // reload operator > node with integer
     return (len_this > n ? 1 : 0);
 }
 
+
+int BST::node::operator < (char* x) { // reload operator < node with string
+
+//    if (n == NULL)
+//        cout << "Error in BST::operator <. The node* is empty." << endl;
+
+    int len_this = 0;
+    for (int i = 0; this->data[i] != '\0'; ++i) {
+        ++len_this;
+    }
+    ++len_this;
+
+    int len_x = 0;
+    for (int i = 0;x[i] != '\0'; ++i) {
+        ++len_x;
+    }
+    ++len_x;
+
+    return (len_this < len_x ? 1 : 0);
+}
+
+
+int BST::node::operator > (char* x) {  // reload operator > node with string
+
+//    if (n == NULL)
+//        cout << "Error in BST::operator >. The node* is empty." << endl;
+
+    int len_this = 0;
+    for (int i = 0; this->data[i] != '\0'; ++i) {
+        ++len_this;
+    }
+    ++len_this;
+
+    int len_x = 0;
+    for (int i = 0; x[i] != '\0'; ++i) {
+        ++len_x;
+    }
+    ++len_x;
+
+    return (len_this > len_x ? 1 : 0);
+}
+
+
 BST::node* BST::insert(char* x, node* t) {
 
     if (t == NULL) {
         t = new node(x);
     }
     else {
-        node* u = new node(x);
+//        node* u = new node(x);
 
-        if (*u < t) {
-            delete u;
+        if (*t > x) {
+//            delete u;
             t->left = insert(x, t->left);
         }
-        else if (*u > t) {
-            delete u;
+        else if (*t < x) {
+//            delete u;
             t->right = insert(x, t->right);
         }
 //        else {
@@ -163,14 +206,10 @@ BST::node* BST::remove(char* x, node* t) {
     if (t == NULL)
         return NULL;
 
-    node* u = new node(x);
-
-    if (*t > u) {
-        delete u;
+    if (*t > x) {
         t->left = remove(x, t->left);
     }
-    else if (*t < u) {
-        delete u;
+    else if (*t < x) {
         t->right = remove(x, t->right);
     }
 
@@ -191,8 +230,6 @@ BST::node* BST::remove(char* x, node* t) {
         t->data[length - 1] = '\0';
 
         t->right = remove(t->data, t->right);
-
-        delete u;
     }
 
     else {
@@ -202,7 +239,6 @@ BST::node* BST::remove(char* x, node* t) {
         else if (t->right == NULL)
             t = t->left;
 
-        delete u;
         delete tmp;
     }
 
