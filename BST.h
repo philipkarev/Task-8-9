@@ -39,6 +39,7 @@ class BST {
     node* remove(char*,node*);
     void inorder(node*);
     node* find(node*, int);
+    node* searchNext(node*, int); // search next element for <
 
     public:
         BST();
@@ -50,7 +51,7 @@ class BST {
         int height(node*);
         int get_height();
         int isBalanced(node*);
-
+        void iterator(int);
 };
 
 #define TASK_8_9_BTS_H

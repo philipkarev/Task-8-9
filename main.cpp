@@ -7,25 +7,29 @@
 int main(){
 
     BST t;
-    char string1[] = "Hello, world! My name is Philip.";
-    char string2[] = "Hello", string3[] = "1", string4[] = "a44";
-    char string5[] = "g";
-    t.insert(string5);
-    t.insert(string2);
-    t.insert(string1);
-    t.insert(string5);
-    t.insert(string4);
-    t.insert(string3);
+    char s2[] = "1", s3[] = "ty", s4[] = "a44";
+    char s5[] = "word", s6[] = "hello";
+    char s7[] = "height", s8[] = "perfect";
+    t.insert(s5);
+    t.insert(s2);
+    t.insert(s7);
+    t.insert(s3);
+
+    t.insert(s4); // not balanced tree
+
+    t.insert(s6);
+    t.insert(s8);
+
+    t.iterator(2);
 
     t.display();
-    t.search(6); // NB!: memory leak
+    t.search(6);
     cout << "The height of tree is " << t.get_height() << endl;
 
-    t.remove(string4); // memory leak
-    t.display();
-
-// 0 is false
-// 1 is true
+    t.remove(s4); // memory leak
 
     return 0;
+
 }
+// 0 is false
+// 1 is true

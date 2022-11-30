@@ -96,9 +96,6 @@ int BST::node::operator > (int n) {  // reload operator > node with integer
 
 int BST::node::operator < (char* x) { // reload operator < node with string
 
-//    if (n == NULL)
-//        cout << "Error in BST::operator <. The node* is empty." << endl;
-
     int len_this = 0;
     for (int i = 0; this->data[i] != '\0'; ++i) {
         ++len_this;
@@ -116,9 +113,6 @@ int BST::node::operator < (char* x) { // reload operator < node with string
 
 
 int BST::node::operator > (char* x) {  // reload operator > node with string
-
-//    if (n == NULL)
-//        cout << "Error in BST::operator >. The node* is empty." << endl;
 
     int len_this = 0;
     for (int i = 0; this->data[i] != '\0'; ++i) {
@@ -142,19 +136,12 @@ BST::node* BST::insert(char* x, node* t) {
         t = new node(x);
     }
     else {
-//        node* u = new node(x);
-
         if (*t > x) {
-//            delete u;
             t->left = insert(x, t->left);
         }
         else if (*t < x) {
-//            delete u;
             t->right = insert(x, t->right);
         }
-//        else {
-//            cout << "Lengths are equal." << endl;
-//        }
     }
 
     return t;
@@ -239,6 +226,9 @@ BST::node* BST::remove(char* x, node* t) {
         else if (t->right == NULL)
             t = t->left;
 
+        if (tmp != NULL){
+            delete [] tmp->data;
+        }
         delete tmp;
     }
 
@@ -280,6 +270,21 @@ BST::node* BST::find(node* t, int x) {
 }
 
 
+BST::node* BST::searchNext(node* node, int x) { // search next element for <
+
+    if (node == NULL) {
+        return NULL;
+    }
+
+    else if ((find(node, x))->left != NULL) {
+        return (find(node, x))->left;
+    }
+    else {
+        return NULL;
+    }
+}
+
+
 BST::BST() {
 
     root = NULL;
@@ -295,6 +300,10 @@ BST::~BST() {
 void BST::insert(char* x) {
 
     root = insert(x, root);
+    if (isBalanced(root) == 0) {
+        cout << "Error: tree isn't balanced" << endl;
+        remove(x);
+    }
 }
 
 
@@ -313,7 +322,7 @@ void BST::display() {
 
 void BST::search(int x) {
 
-    root = find(root, x);
+    find(root, x);
 }
 
 
@@ -344,10 +353,24 @@ int BST::isBalanced(node* root) {
     right_height = height(root->right);
 
     if (abs(left_height - right_height) <= 1 && isBalanced(root->left) && isBalanced(root->right)) {
-        cout << "Tree is balanced." << endl;
+//        cout << "Tree is balanced." << endl;
         return 1;
     }
 
-    cout << "Tree isn't balanced." << endl;
+//    cout << "Tree isn't balanced." << endl;
     return 0;
+}
+
+
+void BST::iterator(int x) { // search next node for <
+
+    node* t = searchNext(root, x);
+
+    if (t == NULL)
+        return;
+
+    cout << "The next element is ";
+    for (int i = 0; t->data[i] != '\0'; ++i)
+        cout << t->data[i];
+    cout << endl;
 }
